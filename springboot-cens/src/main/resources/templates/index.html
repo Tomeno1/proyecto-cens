@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" href="../static/css/bootstrap.css" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" href="../static/css/style.css">
+    <title>CENS</title>
+</head>
+
+<body>
+    <header class="navbar navbar-dark p-0 shadow">
+        <a class="navbar-brand me-0 px-3 fw-bold text-uppercase" href="#">CENS</a>
+        <div class="search-wrapper">
+            <input class="search-input" type="text" placeholder="Buscar"><ion-icon name="search"></ion-icon>
+        </div>
+        <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <div class="icon img-fluid">
+                            <img th:src="@{/img/logo.png}" src="../static/img/logo.png">
+                        </div>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{/}" href="#"><ion-icon
+                                    class="px-2" name="home"></ion-icon>Panel</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/}" href="#"><ion-icon class="px-2"
+                                    name="people"></ion-icon>Clientes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/}" href="#"><ion-icon class="px-2"
+                                    name="stats-chart"></ion-icon>Reportes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/}" href="#"><ion-icon class="px-2"
+                                    name="layers"></ion-icon>Integraciones</a>
+                        </li>
+                    </ul>
+
+                    <h6
+                        class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Informes Guardados</span>
+                        <a class="link-secondary" th:href="@{/}" href="#" aria-label="Add a new report">
+                            <ion-icon class="pluss-circle" name="add-circle-outline"></ion-icon></a>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/}" href="#"><ion-icon class="px-2"
+                                    name="document-text"></ion-icon>Mes Actual</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/}" href="#"><ion-icon class="px-2"
+                                    name="document-text"></ion-icon>Reportes Semanales</a>
+                        </li>
+                        <h6
+                            class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            <span>SESIÓN</span>
+                        </h6>
+                        <a class="nav-link" th:href="@{/}" href="#"><ion-icon class="px-2"
+                                name="log-out"></ion-icon>Cerrar
+                            sesion</a>
+                    </ul>
+                </div>
+            </nav>
+</body>
+<script th:src="@{/js/jquery.js}" src="../static/js/jquery.js"></script>
+<script th:src="@{/js/bootstrap.js}" src="../static/js/bootstrap.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</html>
