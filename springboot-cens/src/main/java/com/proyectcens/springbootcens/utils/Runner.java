@@ -33,7 +33,8 @@ public class Runner implements CommandLineRunner {
             this.userRepository.saveAll(List.of(
                     new User("tomas.sureda", encoders.encode("tasq2801"),List.of(this.authorityRepository.findByName(AuthorityName.ADMIN).get())),
                     new User("duvan.apiolaza", encoders.encode("duvaap2801"),List.of(this.authorityRepository.findByName(AuthorityName.ADMIN).get())),
-                    new User("mathias.navarrete", encoders.encode("mathiasn2801"),List.of(this.authorityRepository.findByName(AuthorityName.ADMIN).get()))));
+                    new User("mathias.navarrete", encoders.encode("mathiasn2801"),List.of(this.authorityRepository.findByName(AuthorityName.ADMIN).get())),
+                    new User("gaston.marquez", encoders.encode("gaston2801"),List.of(this.authorityRepository.findByName(AuthorityName.ADMIN).get()))));
         }
     }
 
