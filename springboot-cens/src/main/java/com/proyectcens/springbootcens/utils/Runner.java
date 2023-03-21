@@ -1,4 +1,5 @@
 package com.proyectcens.springbootcens.utils;
+
 import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -32,9 +33,9 @@ public class Runner implements CommandLineRunner {
             var encoders = PasswordEncoderFactories.createDelegatingPasswordEncoder();
             this.userRepository.saveAll(List.of(
                     new User("tomas.sureda", encoders.encode("tasq2801"),List.of(this.authorityRepository.findByName(AuthorityName.ADMIN).get())),
-                    new User("duvan.apiolaza", encoders.encode("duvaap2801"),List.of(this.authorityRepository.findByName(AuthorityName.ADMIN).get())),
-                    new User("mathias.navarrete", encoders.encode("mathiasn2801"),List.of(this.authorityRepository.findByName(AuthorityName.ADMIN).get())),
-                    new User("gaston.marquez", encoders.encode("gaston2801"),List.of(this.authorityRepository.findByName(AuthorityName.ADMIN).get()))));
+                    new User("duvan.apiolaza", encoders.encode("duvaap2801"),List.of(this.authorityRepository.findByName(AuthorityName.READ).get())),
+                    new User("mathias.navarrete", encoders.encode("mathiasn2801"),List.of(this.authorityRepository.findByName(AuthorityName.WRITE).get()))
+             ));
         }
     }
 
