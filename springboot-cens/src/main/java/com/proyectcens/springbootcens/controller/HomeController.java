@@ -7,6 +7,6 @@ public class HomeController {
 
     @PostMapping("/demo")
     public String showDemo() {
-        return "hola mundo";
+        return "Hola mundo, estamos probando esto";
     }
 }
