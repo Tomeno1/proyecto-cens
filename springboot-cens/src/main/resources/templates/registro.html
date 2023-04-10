@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro de usuario</title>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" href="../static/css/bootstrap.css" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-5">Registro de usuario</h1>
+        <form th:action="@{/registro}" th:object="${usuario}" method="post">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre completo</label>
+                <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
+                    placeholder="Ingrese su nombre completo" />
+            </div>
+            <div class="mb-3">
+                <label for="correo" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="correo" th:field="*{correo}"
+                    placeholder="Ingrese su correo electrónico" />
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" th:field="*{password}"
+                    placeholder="Ingrese su contraseña" />
+            </div>
+            <div class="mb-3">
+                <label for="rol" class="form-label">Rol</label>
+                <select class="form-select" id="rol" th:field="*{rol}">
+                    <option value="ADMIN">Administrador</option>
+                    <option value="USER">Usuario</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+        </form>
+    </div>
+</body>
+<script th:src="@{/js/jquery.js}" src="../static/js/jquery.js"></script>
+<script th:src="@{/js/bootstrap.js}" src="../static/js/bootstrap.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</html>
