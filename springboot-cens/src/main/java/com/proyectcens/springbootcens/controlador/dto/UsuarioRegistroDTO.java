@@ -7,6 +7,7 @@ public class UsuarioRegistroDTO {
 	private String apellido;
 	private String email;
 	private String password;
+	
 
 	public Long getId() {
 		return id;

@@ -38,7 +38,7 @@ public class Rol {
 	}
 
 	public Rol() {
-		
+
 	}
 
 	public Rol(String nombre) {
@@ -46,5 +46,4 @@ public class Rol {
 		this.nombre = nombre;
 	}
 
-	
 }
