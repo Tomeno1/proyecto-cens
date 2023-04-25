@@ -28,8 +28,9 @@
 
                         </li>
                         <li class="nav-item py-2 py-sm-0">
-                            <a th:href="@{/registrarEmpresa}" href="registrarEmpresa.html" class="nav-link text-white"><ion-icon
-                                    name="add-circle"></ion-icon><span class="ms-2 d-none d-sm-inline">Regisrar
+                            <a th:href="@{/registrarEmpresa}" href="registrarEmpresa.html"
+                                class="nav-link text-white"><ion-icon name="add-circle"></ion-icon><span
+                                    class="ms-2 d-none d-sm-inline">Regisrar
                                     Empresa</span></a>
 
                         </li>
@@ -59,14 +60,52 @@
                 </div>
             </div>
             <!--contenido-->
-            <div class="col p-3 ">
-                <form class="d-flex">
+            <div class="col p-3">
+                <form class="d-flex mb-3">
                     <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
-                    <button class="btn btn-outline-success" type="submit">Buscar</button>z
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
                 </form>
-                
-            </div>
 
+                <hr class="border-top my-4">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div th:if="${param.exito}">
+                            <script th:inline="javascript">
+                                /* Llamar a la función en el evento onload del body */
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    Swal.fire({
+                                        text: '¡La Empresa se ha registrado exitosamente a la aplicación!',
+                                        icon: 'success',
+                                        confirmButtonText: 'Aceptar'
+                                    });
+                                });
+                            </script>
+                        </div>
+                        <h5 class="card-title">Registro de Empresa</h5>
+                        <form method="post" th:action="@{empresas/registro}" th:object="${empresa}">
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre de la Empresa</label>
+                                <input type="text" class="form-control" name="nombre" id="nombre" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="direccion" class="form-label">Dirección</label>
+                                <input type="text" class="form-control" name="direccion" id="direccion" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" name="telefono" id="telefono" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Correo Electrónico</label>
+                                <input type="email" class="form-control" name="email" id="email" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary float-end">Registrar</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js">
