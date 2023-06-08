@@ -8,5 +8,5 @@ public interface EmpresaServicio {
 
     public Empresa guardar(EmpresaRegistroDTO registroDTO);
 
-    public List<Empresa> listarEmpresa();
+    public List<Empresa> listarEmpresas();
 }

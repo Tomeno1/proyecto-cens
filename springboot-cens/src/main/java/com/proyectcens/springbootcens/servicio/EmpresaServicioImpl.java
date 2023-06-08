@@ -20,18 +20,15 @@ public class EmpresaServicioImpl implements EmpresaServicio {
     @Override
     public Empresa guardar(EmpresaRegistroDTO registroDTO) {
         Empresa empresa = new Empresa();
-        empresa.setNombre(registroDTO.getNombre());
-        empresa.setDireccion(registroDTO.getDireccion());
-        empresa.setTelefono(registroDTO.getTelefono());
-        empresa.setEmail(registroDTO.getEmail());
+        empresa.setRut(registroDTO.getRut());
+        empresa.setRazonSocial(registroDTO.getRazonSocial());
+        empresa.setFechaIngreso(registroDTO.getFechaIngreso());
+
         return empresaRepositorio.save(empresa);
     }
 
     @Override
-    public List<Empresa> listarEmpresa() {
-        // TODO Auto-generated method stub
+    public List<Empresa> listarEmpresas() {
         return empresaRepositorio.findAll();
     }
-
-    // Otros métodos si son necesarios
 }

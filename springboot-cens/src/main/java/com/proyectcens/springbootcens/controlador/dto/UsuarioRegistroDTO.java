@@ -7,7 +7,8 @@ public class UsuarioRegistroDTO {
 	private String apellido;
 	private String email;
 	private String password;
-	
+	private String rut;
+	private String telefono;
 
 	public Long getId() {
 		return id;
@@ -49,13 +50,31 @@ public class UsuarioRegistroDTO {
 		this.password = password;
 	}
 
+	public String getRut() {
+		return rut;
+	}
 
-	public UsuarioRegistroDTO(String nombre, String apellido, String email, String password) {
+	public void setRut(String rut) {
+		this.rut = rut;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public UsuarioRegistroDTO(String nombre, String apellido, String email, String password, String rut,
+			String telefono) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.password = password;
+		this.rut = rut;
+		this.telefono = telefono;
 	}
 
 	public UsuarioRegistroDTO() {

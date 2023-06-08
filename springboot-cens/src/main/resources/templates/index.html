@@ -27,14 +27,16 @@
                                     name="apps"></ion-icon><span class="ms-2 d-none d-sm-inline">Dashboard</span></a>
 
                         </li>
-                        <li class="nav-item py-2 py-sm-0">
+                        <li th:if="${#request.isUserInRole('ROLE_ADMIN') or #request.isUserInRole('ROLE_GESTOR')}"
+                            class="nav-item py-2 py-sm-0">
                             <a th:href="@{/registrarEmpresa}" href="registrarEmpresa.html"
                                 class="nav-link text-white"><ion-icon name="add-circle"></ion-icon><span
                                     class="ms-2 d-none d-sm-inline">Regisrar
                                     Empresa</span></a>
 
                         </li>
-                        <li class="nav-item py-2 py-sm-0">
+                        <li th:if="${#request.isUserInRole('ROLE_ADMIN') or #request.isUserInRole('ROLE_GESTOR')}"
+                            class="nav-item py-2 py-sm-0">
                             <a th:href="@{/empresa}" href="empresa.html" class="nav-link text-white"><ion-icon
                                     name="people"></ion-icon><span class="ms-2 d-none d-sm-inline">Buscar
                                     Empresa</span></a>

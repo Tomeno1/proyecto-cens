@@ -61,38 +61,36 @@
             </div>
             <!--contenido-->
             <div class="col p-3">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Inicio</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Productos</a>
-                                </li>
-                            </ul>
-                            <form class="d-flex ms-auto">
-                                <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
-                                <button class="btn btn-outline-success" type="submit">Buscar</button>
-                            </form>
-                        </div>
-                    </div>
-                </nav>
-
+                <div class="col p-3 ">
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                        <button class="btn btn-outline-success" type="submit">Buscar</button>
+                    </form>
+                </div>
                 <hr class="border-top my-4">
-
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
+                                    <div th:if=${param.error}>
+                                        <script th:inline="javascript">
+                                            /* Llamar a la función en el evento onload del body */
+                                            document.addEventListener("DOMContentLoaded", function () {
+                                                Swal.fire({
+                                                    text: 'Lo siento, empresa no Registrada',
+                                                    icon: 'error',
+                                                    confirmButtonText: 'Aceptar'
+                                                });
+                                            });
+                                        </script>
+                                    </div>
                                     <h5 class="card-title">Buscar empresa</h5>
-                                    <form>
+                                    <form id="buscarEmpresaForm" action="/empresas/buscarEmpresa" method="GET">
                                         <div class="mb-3">
-                                            <label for="rut" class="form-label">Nombre</label>
+                                            <label for="rut" class="form-label">RUT</label>
                                             <input type="text" class="form-control" id="rut"
-                                                placeholder="Ingrese el Nombre de la empresa">
+                                                placeholder="Ingrese el RUT de la empresa" name="rut">
                                         </div>
                                         <button type="submit" class="btn btn-primary">Buscar</button>
                                     </form>
@@ -108,29 +106,22 @@
                                             <tr>
                                                 <th scope="col">RUT</th>
                                                 <th scope="col">Nombre</th>
-                                                <th scope="col">Dirección</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>12.345.678-9</td>
-                                                <td>Empresa A</td>
-                                                <td>Calle Falsa 123</td>
-                                            </tr>
-                                            <tr>
-                                                <td>98.765.432-1</td>
-                                                <td>Empresa B</td>
-                                                <td>Avenida Siempreviva 456</td>
+                                            <tr th:each="empresa : ${empresaEncontrada}">
+                                                <td th:text="${empresa.rut}"></td>
+                                                <td th:text="${empresa.razonSocial}"></td>
+
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
+                                <button type="submit" class="btn btn-primary">Ver Empresa</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js">

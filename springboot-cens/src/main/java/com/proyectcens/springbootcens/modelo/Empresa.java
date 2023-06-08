@@ -1,11 +1,15 @@
 package com.proyectcens.springbootcens.modelo;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "empresa")
@@ -14,17 +18,28 @@ public class Empresa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre")
-    private String nombre;
+    @Column(name = "rut")
+    private String rut;
 
-    @Column(name = "direccion")
-    private String direccion;
+    @Column(name = "razon_social")
+    private String razonSocial;
 
-    @Column(name = "telefono")
-    private String telefono;
+    @Column(name = "fecha_ingreso")
+    private Date fechaIngreso;
 
-    @Column(name = "email")
-    private String email;
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
+    private List<Usuario> usuarios;
+
+    public Empresa() {
+    }
+
+    public Empresa(Long id, String rut, String razonSocial, Date fechaIngreso, List<Usuario> usuarios) {
+        this.id = id;
+        this.rut = rut;
+        this.razonSocial = razonSocial;
+        this.fechaIngreso = fechaIngreso;
+        this.usuarios = usuarios;
+    }
 
     public Long getId() {
         return id;
@@ -34,48 +49,37 @@ public class Empresa {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getRut() {
+        return rut;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setRut(String rut) {
+        this.rut = rut;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getRazonSocial() {
+        return razonSocial;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public Date getFechaIngreso() {
+        return fechaIngreso;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setFechaIngreso(Date fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
     }
 
-    public String getEmail() {
-        return email;
+    public List<Usuario> getUsuarios() {
+        return usuarios;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 
-    // Constructores
-    public Empresa() {
-    }
-
-    public Empresa(Long id, String nombre, String direccion, String telefono, String email) {
-        this.id = id;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.email = email;
-    }
-
+    // Otras anotaciones, métodos personalizados, equals, hashCode, etc.
 }

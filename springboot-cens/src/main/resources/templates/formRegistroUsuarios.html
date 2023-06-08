@@ -37,8 +37,10 @@
 						});
 					</script>
 				</div>
-				<form class="" th:action="@{/registro}" method="post" th:object="${usuario}"
+				<h5 class="card-title">Registro de Usuarios</h5>
+				<form class="" th:action="@{/registroUsuarios}" method="post" th:object="${usuario}"
 					enctype="multipart/form-data">
+
 					<div class="mb-3">
 						<label for="nombre" class="form-label">Nombre:</label>
 						<input id="nombre" type="text" class="form-control" th:field="*{nombre}" required
@@ -50,9 +52,19 @@
 							placeholder="Ingrese su apellido">
 					</div>
 					<div class="mb-3">
-						<label for="email" type="email" class="form-label">Correo electrónico:</label>
+						<label for="rut" class="form-label">RUT:</label>
+						<input id="rut" class="form-control" th:field="*{rut}" required autofocus="autofocus"
+							placeholder="Ingrese su RUT">
+					</div>
+					<div class="mb-3">
+						<label for="telefono" class="form-label">Teléfono:</label>
+						<input id="telefono" class="form-control" th:field="*{telefono}" required autofocus="autofocus"
+							placeholder="Ingrese su teléfono">
+					</div>
+					<div class="mb-3">
+						<label for="email" class="form-label">Correo electrónico:</label>
 						<input id="email" type="email" class="form-control" th:field="*{email}" required
-							autofocus="autofocus" placeholder="Ingrese su correo electronico">
+							autofocus="autofocus" placeholder="Ingrese su correo electrónico">
 					</div>
 					<div class="mb-3">
 						<label for="password" class="form-label">Contraseña:</label>
@@ -60,11 +72,16 @@
 							autofocus="autofocus" placeholder="Ingrese contraseña">
 					</div>
 
+				
+
 					<div class="col-md-6 col-md-offset-3">
 						<button type="submit" class="form-control fw-normal" name="registro-submit"
-							id="registro-submit"><span>Registrarse</span></button>
+							id="registro-submit">
+							<span>Registrarse</span>
+						</button>
 					</div>
 				</form>
+
 				<div class="form-group">
 					<span>Si ya tienes una cuenta, <a th:href="@{/login}">inicia sesión aquí</a></span>
 				</div>

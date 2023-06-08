@@ -1,12 +1,14 @@
 package com.proyectcens.springbootcens.controlador.dto;
 
-public class EmpresaRegistroDTO {
+import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
+public class EmpresaRegistroDTO {
     private Long id;
-    private String nombre;
-    private String direccion;
-    private String telefono;
-    private String email;
+    private String rut;
+    private String razonSocial;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fechaIngreso;
 
     public Long getId() {
         return id;
@@ -16,47 +18,38 @@ public class EmpresaRegistroDTO {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getRut() {
+        return rut;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setRut(String rut) {
+        this.rut = rut;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getRazonSocial() {
+        return razonSocial;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public Date getFechaIngreso() {
+        return fechaIngreso;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public EmpresaRegistroDTO(Long id, String nombre, String direccion, String telefono, String email) {
-        this.id = id;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.email = email;
+    public void setFechaIngreso(Date fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
     }
 
     public EmpresaRegistroDTO() {
+    }
+
+    public EmpresaRegistroDTO(Long id, String rut, String razonSocial, Date fechaIngreso) {
+        this.id = id;
+        this.rut = rut;
+        this.razonSocial = razonSocial;
+        this.fechaIngreso = fechaIngreso;
     }
 
 }
