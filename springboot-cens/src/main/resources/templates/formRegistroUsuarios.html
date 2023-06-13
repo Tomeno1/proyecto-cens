@@ -37,8 +37,20 @@
 						});
 					</script>
 				</div>
+				<div th:if=${param.error}>
+					<script th:inline="javascript">
+						/* Llamar a la función en el evento onload del body */
+						document.addEventListener("DOMContentLoaded", function () {
+							Swal.fire({
+								text: 'Usuario ya ingresado, registre otro',
+								icon: 'error',
+								confirmButtonText: 'Aceptar'
+							});
+						});
+					</script>
+				</div>
 				<h5 class="card-title">Registro de Usuarios</h5>
-				<form class="" th:action="@{/registroUsuarios}" method="post" th:object="${usuario}"
+				<form class="" th:action="@{/guardarUsuario}" method="post" th:object="${usuario}"
 					enctype="multipart/form-data">
 
 					<div class="mb-3">

@@ -15,16 +15,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UsuarioServicio usuarioServicio;
-	
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
@@ -32,37 +32,32 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		auth.setPasswordEncoder(passwordEncoder());
 		return auth;
 	}
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider());
 	}
-	
+
 	@Override
-protected void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests()
-            .antMatchers("/admin").hasAuthority("ROLE_ADMIN")
-            .antMatchers("/user").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
-            .antMatchers("/gestor").hasAuthority("ROLE_GESTOR")
-            .antMatchers("/registro**", "/js/**", "/css/**", "/img/**").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .loginPage("/login")
-            .permitAll()
-            .and()
-            .logout()
-            .invalidateHttpSession(true)
-            .clearAuthentication(true)
-            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-            .logoutSuccessUrl("/login?logout")
-            .permitAll();
-}
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+				.antMatchers("/admin").hasAuthority("ROLE_ADMIN")
+				.antMatchers("/user").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+				.antMatchers("/gestor").hasAuthority("ROLE_GESTOR")
+				.antMatchers("/").permitAll()
+				.and()
+				.formLogin()
+				.loginPage("/login")
+				.permitAll()
+				.and()
+				.logout()
+				.invalidateHttpSession(true)
+				.clearAuthentication(true)
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/login?logout")
+				.permitAll()
+				.and()
+				.csrf().disable(); // Desactivar CSRF para simplificar el ejemplo
+	}
 
 }
-
-
-
-
-
-

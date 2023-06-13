@@ -13,11 +13,15 @@ public class RegistroControlador {
 	@Autowired
 	private UsuarioServicio servicio;
 
-	@GetMapping("/login")
-	public String iniciarSesion() {
-		return "login";
+	@GetMapping("/empresa")
+	public String verPaginaEmpresa(){
+		return "empresa";
 	}
 
+	@GetMapping("/ambitoDashboard")
+	public String verPaginaAmbito(){
+		return "ambitoDashboard";
+	}
 
 	@GetMapping("/")
 	public String verPaginaDeInicio(Model modelo) {

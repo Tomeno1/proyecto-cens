@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -25,21 +28,25 @@ public class Empresa {
     private String razonSocial;
 
     @Column(name = "fecha_ingreso")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaIngreso;
 
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
     private List<Usuario> usuarios;
 
+    // Constructores
+
     public Empresa() {
     }
 
-    public Empresa(Long id, String rut, String razonSocial, Date fechaIngreso, List<Usuario> usuarios) {
-        this.id = id;
+    public Empresa(String rut, String razonSocial, Date fechaIngreso, List<Usuario> usuarios) {
         this.rut = rut;
         this.razonSocial = razonSocial;
         this.fechaIngreso = fechaIngreso;
         this.usuarios = usuarios;
     }
+
+    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -81,5 +88,4 @@ public class Empresa {
         this.usuarios = usuarios;
     }
 
-    // Otras anotaciones, métodos personalizados, equals, hashCode, etc.
 }

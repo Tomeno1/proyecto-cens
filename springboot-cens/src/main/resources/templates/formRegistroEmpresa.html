@@ -38,8 +38,20 @@
                             });
                         </script>
                     </div>
+                    <div th:if="${param.error}">
+                        <script th:inline="javascript">
+                            /* Llamar a la función en el evento onload del body */
+                            document.addEventListener("DOMContentLoaded", function () {
+                                Swal.fire({
+                                    text: 'Error, la empresa no se ha registrado',
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar'
+                                });
+                            });
+                        </script>
+                    </div>
                     <h5 class="card-title">Registro de Empresa</h5>
-                    <form method="post" th:action="@{/registroEmpresas}" th:object="${empresa}">
+                    <form method="post" th:action="@{/guardarEmpresa}" th:object="${empresa}">
                         <div class="mb-3">
                             <label for="rut" class="form-label">RUT de la empresa</label>
                             <input type="text" class="form-control" th:field="*{rut}" required
@@ -56,10 +68,6 @@
                         </div>
                         <button type="submit" class="btn btn-primary float-end">Registrar</button>
                     </form>
-
-                    <div class="form-group">
-                        <span>Registra el usuario, <a th:href="@{/registroUsuarios}">presiona aquí!</a></span>
-                    </div>
                 </div>
             </div>
         </div>

@@ -1,9 +1,7 @@
 package com.proyectcens.springbootcens.modelo;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,16 +37,17 @@ public class Usuario {
 	@Column(name = "telefono")
 	private String telefono;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "empresa_id")
+	@ManyToOne
+	@JoinColumn(name = "empresa_id", referencedColumnName = "id")
 	private Empresa empresa;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "rol_id", referencedColumnName = "id")
 	private Rol rol;
 
-	public Usuario() {
+	// Constructores
 
+	public Usuario() {
 	}
 
 	public Usuario(Long id, String nombre, String apellido, String email, String password, String rut, String telefono,
@@ -64,17 +63,7 @@ public class Usuario {
 		this.rol = rol;
 	}
 
-	public Usuario(String nombre, String apellido, String email, String password, String rut, String telefono,
-			Empresa empresa, Rol rol) {
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.email = email;
-		this.password = password;
-		this.rut = rut;
-		this.telefono = telefono;
-		this.empresa = empresa;
-		this.rol = rol;
-	}
+	// Getters and Setters
 
 	public Long getId() {
 		return id;
@@ -147,4 +136,5 @@ public class Usuario {
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
+
 }

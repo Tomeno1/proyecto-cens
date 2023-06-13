@@ -9,6 +9,9 @@ import com.proyectcens.springbootcens.modelo.Empresa;
 
 @Repository
 public interface EmpresaRepositorio extends JpaRepository<Empresa, Long> {
-    public Empresa findByRut(String rut);
-    Optional<Empresa> findById(long id);
+
+    Optional<Empresa> findByRut(String rut);
+
+    Optional<Empresa> findById(Long id);
+
 }

@@ -1,5 +1,7 @@
 package com.proyectcens.springbootcens.controlador.dto;
 
+import com.proyectcens.springbootcens.modelo.Empresa;
+
 public class UsuarioRegistroDTO {
 
 	private Long id;
@@ -9,6 +11,7 @@ public class UsuarioRegistroDTO {
 	private String password;
 	private String rut;
 	private String telefono;
+	private Empresa idEmpresa;
 
 	public Long getId() {
 		return id;
@@ -64,6 +67,14 @@ public class UsuarioRegistroDTO {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+
+	public Empresa getIdEmpresa() {
+		return idEmpresa;
+	}
+
+	public void setIdEmpresa(Empresa idEmpresa) {
+		this.idEmpresa = idEmpresa;
 	}
 
 	public UsuarioRegistroDTO(String nombre, String apellido, String email, String password, String rut,
