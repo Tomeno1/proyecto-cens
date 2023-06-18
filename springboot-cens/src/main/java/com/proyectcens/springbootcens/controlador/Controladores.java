@@ -1,16 +1,19 @@
 package com.proyectcens.springbootcens.controlador;
 
-import javax.annotation.security.PermitAll;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-@PermitAll
-public class LoginControlador {
-    
-    @GetMapping("/login")
+public class Controladores {
+
+	@GetMapping("/login")
 	public String showLoginPage() {
 		return "login";
 	}
+
+	@GetMapping("/")
+	public String showIndexPage() {
+		return "index";
+	}
+
 }

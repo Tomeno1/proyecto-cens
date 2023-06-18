@@ -39,6 +39,16 @@ public class Sello {
         this.ambitos = ambitos;
     }
 
+    public Sello(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+
+    public Sello(String nombre, String descripcion, List<Ambito> ambitos) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.ambitos = ambitos;
+    }
     // Getters and Setters
 
     public Long getId() {

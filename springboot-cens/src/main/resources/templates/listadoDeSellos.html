@@ -45,7 +45,7 @@
                                 class="nav-link text-white"><ion-icon name="person-add"></ion-icon><span
                                     class="ms-2 d-none d-sm-inline">Registrar Usuario CENS</span></a>
                         </li>
-                        <li class="nav-item py-2 py-sm-0">
+                        <li class="nav-item py-2 py-sm-0"><!-- sec:authorize="isAuthenticated() -->
                             <a th:href="@{/login?logout}" href="login.html" class="nav-link text-white"><ion-icon
                                     name="log-out"></ion-icon><span class="ms-2 d-none d-sm-inline">Cerrar
                                     Sesion</span></a>
@@ -69,101 +69,39 @@
                     <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
                     <button class="btn btn-outline-success" type="submit">Buscar</button>
                 </form>
-                <!-- <p>Bienvenido <span sec:authentication="nombre"></span></p> -->
-                <div class="row mt-4">
-                    <div class="col-md-4">
-                        <div class="card bg-primary text-white">
-                            <div class="card-body">
-                                <h5 class="card-title">Empresa</h5>
-                                <p class="card-text">Nombre de la empresa</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card bg-secondary text-white">
-                            <div class="card-body">
-                                <h5 class="card-title">Notas Promedio</h5>
-                                <p class="card-text">Promedio de notas</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card bg-success text-white">
-                            <div class="card-body">
-                                <h5 class="card-title">Tiempo Promedio de Sellos</h5>
-                                <p class="card-text">Tiempo promedio</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-md-4">
-                        <div class="card mt-4">
-                            <div class="card-header">
-                                Ambito Calificaciones
-                            </div>
-                            <div class="card-body">
-                                <canvas id="chartCanvas" style="max-width: 500px; height: auto;"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <!-- Otras tarjetas -->
-                    </div>
-                    <div class="col-md-4">
-                        <!-- Otras tarjetas -->
+                <hr class="border-top my-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Listado de Sellos</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Descripcion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="sello : ${listaSellos}">
+                                    <td th:text="${sello.nombre}"></td>
+                                    <td th:text="${sello.descripcion}"></td>
+                                    <td>
+                                        <a th:href="@{/actualizarSello/}+${sello.id}" class="btn btn-primary">Ver
+                                            Sello</a>
+                                        <a th:href="@{/eliminarSello/}+${sello.id}" class="btn btn-danger">Eliminar
+                                            Sello</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+                <hr class="border-top my-2">
+                <a th:href="@{/crearSello}" class="btn btn-primary ">Crear Sello</a>
             </div>
-            <!-- contenido -->
+
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var categoria;
-            var valoress;
-            axios.get('/api/promedio')
-                .then(function (response) {
-                    var data = response.data; // Aquí obtienes los datos JSON
-
-                    categoria = data.map(function (item) {
-                        return item.category;
-                    });
-
-                    valoress = data.map(function (item) {
-                        return item.value;
-                    });
-                    var ctx = document.getElementById('chartCanvas').getContext('2d');
-                    var chart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: categoria,
-                            datasets: [{
-                                data: valoress,
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        });
-    </script>
+    <!-- contenido -->
     <script src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

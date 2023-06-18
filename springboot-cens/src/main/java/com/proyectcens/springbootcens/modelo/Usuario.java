@@ -1,13 +1,17 @@
 package com.proyectcens.springbootcens.modelo;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -41,17 +45,15 @@ public class Usuario {
 	@JoinColumn(name = "empresa_id", referencedColumnName = "id")
 	private Empresa empresa;
 
-	@OneToOne
-	@JoinColumn(name = "rol_id", referencedColumnName = "id")
-	private Rol rol;
-
-	// Constructores
+	@ManyToMany
+	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
+	private Collection<Rol> rol;
 
 	public Usuario() {
 	}
 
 	public Usuario(Long id, String nombre, String apellido, String email, String password, String rut, String telefono,
-			Empresa empresa, Rol rol) {
+			Empresa empresa, Collection<Rol> rol) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -63,7 +65,28 @@ public class Usuario {
 		this.rol = rol;
 	}
 
-	// Getters and Setters
+	public Usuario(String nombre, String apellido, String email, String password, String rut, String telefono,
+			Empresa empresa) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.password = password;
+		this.rut = rut;
+		this.telefono = telefono;
+		this.empresa = empresa;
+
+	}
+
+	public Usuario(String nombre, String apellido, String email, String password, String rut, String telefono,
+			Collection<Rol> rol) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.password = password;
+		this.rut = rut;
+		this.telefono = telefono;
+		this.rol = rol;
+	}
 
 	public Long getId() {
 		return id;
@@ -129,11 +152,11 @@ public class Usuario {
 		this.empresa = empresa;
 	}
 
-	public Rol getRol() {
+	public Collection<Rol> getRol() {
 		return rol;
 	}
 
-	public void setRol(Rol rol) {
+	public void setRol(Collection<Rol> rol) {
 		this.rol = rol;
 	}
 

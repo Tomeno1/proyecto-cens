@@ -1,8 +1,6 @@
 package com.proyectcens.springbootcens.modelo;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,9 +13,19 @@ public class Rol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String nombre;
 
-    @Enumerated(EnumType.STRING)
-    private RolEnum nombre;
+    public Rol() {
+    }
+
+    public Rol(Long id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
+    public Rol(String nombre) {
+        this.nombre = nombre;
+    }
 
     public Long getId() {
         return id;
@@ -27,18 +35,12 @@ public class Rol {
         this.id = id;
     }
 
-    public RolEnum getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(RolEnum nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public Rol() {
-    }
-
-    public Rol(RolEnum nombre) {
-        this.nombre = nombre;
-    }
 }

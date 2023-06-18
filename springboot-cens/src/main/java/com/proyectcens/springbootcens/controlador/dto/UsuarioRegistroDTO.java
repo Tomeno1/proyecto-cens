@@ -11,7 +11,40 @@ public class UsuarioRegistroDTO {
 	private String password;
 	private String rut;
 	private String telefono;
-	private Empresa idEmpresa;
+	private String rol;
+	private Empresa empresa;
+
+	public UsuarioRegistroDTO(Long id, String nombre, String apellido, String email, String password, String rut,
+			String telefono, Empresa empresa) {
+		this.id = id;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.password = password;
+		this.rut = rut;
+		this.telefono = telefono;
+
+		this.empresa = empresa;
+	}
+
+	public UsuarioRegistroDTO(String nombre, String apellido, String email, String password, String rut,
+			String telefono, String rol, Empresa empresa) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.password = password;
+		this.rut = rut;
+		this.telefono = telefono;
+		this.rol = rol;
+		this.empresa = empresa;
+	}
+
+	public UsuarioRegistroDTO(String email) {
+		this.email = email;
+	}
+
+	public UsuarioRegistroDTO() {
+	}
 
 	public Long getId() {
 		return id;
@@ -69,27 +102,20 @@ public class UsuarioRegistroDTO {
 		this.telefono = telefono;
 	}
 
-	public Empresa getIdEmpresa() {
-		return idEmpresa;
+	public Empresa getEmpresa() {
+		return empresa;
 	}
 
-	public void setIdEmpresa(Empresa idEmpresa) {
-		this.idEmpresa = idEmpresa;
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
-	public UsuarioRegistroDTO(String nombre, String apellido, String email, String password, String rut,
-			String telefono) {
-		super();
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.email = email;
-		this.password = password;
-		this.rut = rut;
-		this.telefono = telefono;
+	public String getRol() {
+		return rol;
 	}
 
-	public UsuarioRegistroDTO() {
-
+	public void setRol(String rol) {
+		this.rol = rol;
 	}
 
 }

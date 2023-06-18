@@ -20,23 +20,34 @@
                     <a class="d-flex text-decoration-none mt-1 align-items-center text-white">
                         <span class="fs-4 d-none d-sm-inline">Menu Lateral</span>
                     </a>
-                    <ul class="nav nav-pills flex-column mt-4 ">
+                    <ul class="nav nav-pills flex-column mt-4">
                         <li class="nav-item py-2 py-sm-0">
-                            <a th:href="@{/index}" href="index.html" class="nav-link text-white"><ion-icon
+                            <a th:href="@{/}" href="index.html" class="nav-link text-white"><ion-icon
                                     name="apps"></ion-icon><span class="ms-2 d-none d-sm-inline">Dashboard</span></a>
                         </li>
-                        <li class="nav-item py-2 py-sm-0">
-                            <a th:href="@{/empresa}" href="empresa.html" class="nav-link text-white"><ion-icon
-                                    name="people"></ion-icon><span class="ms-2 d-none d-sm-inline">Buscar
-                                    Empresa</span></a>
+                        <li th:if="${#request.isUserInRole('ROLE_ADMIN')}" class="nav-item py-2 py-sm-0">
+                            <a th:href="@{/crearEmpresa}" href="formRegistroEmpresa.html"
+                                class="nav-link text-white"><ion-icon name="business"></ion-icon><span
+                                    class="ms-2 d-none d-sm-inline">Registrar Empresa</span></a>
                         </li>
                         <li th:if="${#request.isUserInRole('ROLE_ADMIN') or #request.isUserInRole('ROLE_GESTOR')}"
                             class="nav-item py-2 py-sm-0">
-                            <a th:href="@{/listarAmbitos}" href="ambito.html" class="nav-link text-white"><ion-icon
-                                    name="reader"></ion-icon><span class="ms-2 d-none d-sm-inline">Ambito</span></a>
+                            <a th:href="@{/buscarEmpresa}" href="empresa.html" class="nav-link text-white"><ion-icon
+                                    name="people"></ion-icon><span class="ms-2 d-none d-sm-inline">Buscar
+                                    Empresa</span></a>
                         </li>
                         <li class="nav-item py-2 py-sm-0">
-                            <a th:href="@{/login}" href="login.html" class="nav-link text-white"><ion-icon
+                            <a th:href="@{/crearSello}" href="formRegistroSello.html"
+                                class="nav-link text-white"><ion-icon name="medkit"></ion-icon><span
+                                    class="ms-2 d-none d-sm-inline">Sello</span></a>
+                        </li>
+                        <li th:if="${#request.isUserInRole('ROLE_ADMIN')}" class="nav-item py-2 py-sm-0">
+                            <a th:href="@{/crearUsuarioCens}" href="formRegistroUsuariosCens.html"
+                                class="nav-link text-white"><ion-icon name="person-add"></ion-icon><span
+                                    class="ms-2 d-none d-sm-inline">Registrar Usuario CENS</span></a>
+                        </li>
+                        <li class="nav-item py-2 py-sm-0"><!-- sec:authorize="isAuthenticated() -->
+                            <a th:href="@{/login?logout}" href="login.html" class="nav-link text-white"><ion-icon
                                     name="log-out"></ion-icon><span class="ms-2 d-none d-sm-inline">Cerrar
                                     Sesion</span></a>
                         </li>
@@ -80,9 +91,9 @@
                                         </script>
                                     </div>
                                     <h5 class="card-title">Buscar empresa</h5>
-                                    <form id="buscarEmpresaForm" action="/registroEmpresas/buscarEmpresa" method="GET">
+                                    <form id="buscarEmpresaForm" action="/buscarEmpresa" method="GET">
                                         <div class="mb-3">
-                                            <label for="rut" class="form-label">RUT</label>
+                                            <label for="rut" class="form-label">RUT:</label>
                                             <input type="text" class="form-control" id="rut"
                                                 placeholder="Ingrese el RUT de la empresa" name="rut">
                                         </div>

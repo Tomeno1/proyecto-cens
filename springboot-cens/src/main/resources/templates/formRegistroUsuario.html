@@ -78,18 +78,7 @@
                         <div class="col-md-4  p-3 mb-5 bg-body rounded">
                             <div class="card border">
                                 <div class="card-body">
-                                    <div th:if="${param.warning}">
-                                        <script th:inline="javascript">
-                                            /* Llamar a la función en el evento onload del body */
-                                            document.addEventListener("DOMContentLoaded", function () {
-                                                Swal.fire({
-                                                    text: 'La empresa ya está registrada',
-                                                    icon: 'warning',
-                                                    confirmButtonText: 'Aceptar'
-                                                })
-                                            });
-                                        </script>
-                                    </div>
+                                    <!-- Segundo formulario -->
                                     <div th:if="${param.exito}">
                                         <script th:inline="javascript">
                                             /* Llamar a la función en el evento onload del body */
@@ -102,32 +91,67 @@
                                             });
                                         </script>
                                     </div>
-                                    <div th:if="${param.error}">
+                                    <div th:if=${param.error}>
                                         <script th:inline="javascript">
                                             /* Llamar a la función en el evento onload del body */
                                             document.addEventListener("DOMContentLoaded", function () {
                                                 Swal.fire({
-                                                    text: 'No se puede registrar la empresa',
+                                                    text: 'Usuario ya ingresado, registre otro',
                                                     icon: 'error',
                                                     confirmButtonText: 'Aceptar'
                                                 });
                                             });
                                         </script>
                                     </div>
-                                    <h5 class="card-title">Registro de Empresa</h5>
-                                    <form method="post" th:action="@{/guardarEmpresa}" th:object="${empresa}">
+                                    <h5 class="card-title">Registro de Usuarios</h5>
+                                    <form class="" th:action="@{/guardarUsuarioEmpresa}" method="post"
+                                        th:object="${usuario}" enctype="multipart/form-data">
                                         <div class="mb-3">
-                                            <label for="rut" class="form-label">RUT de la empresa:</label>
-                                            <input type="text" class="form-control" th:field="*{rut}" required
-                                                placeholder="Ingrese rut de la empresa">
+                                            <label for="nombre" class="form-label">Nombre:</label>
+                                            <input type="hidden" name="empresaId" th:value="${ultimaEmpresaId}" />
+                                            <input id="nombre" type="text" class="form-control" th:field="*{nombre}"
+                                                required autofocus="autofocus" placeholder="Ingrese su nombre">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="razonSocial" class="form-label">Razón Social:</label>
-                                            <input type="text" class="form-control" th:field="*{razonSocial}" required
-                                                placeholder="Ingrese nombre de la empresa">
+                                            <label for="apellido" class="form-label">Apellido:</label>
+                                            <input id="apellido" class="form-control" th:field="*{apellido}" required
+                                                autofocus="autofocus" placeholder="Ingrese su apellido">
                                         </div>
-                                        <button id="btnRegistrar" type="submit"
-                                            class="btn btn-primary">Registrar</button>
+                                        <div class="mb-3">
+                                            <label for="rut" class="form-label">RUT:</label>
+                                            <input id="rut" class="form-control" th:field="*{rut}" required
+                                                autofocus="autofocus" placeholder="Ingrese su RUT">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="telefono" class="form-label">Teléfono:</label>
+                                            <input id="telefono" type="tel" class="form-control" th:field="*{telefono}"
+                                                required autofocus="autofocus" placeholder="Ingrese su teléfono">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Correo electrónico:</label>
+                                            <input id="email" type="email" class="form-control" th:field="*{email}"
+                                                required autofocus="autofocus"
+                                                placeholder="Ingrese su correo electrónico">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="empresa" class="form-label">Selecciona tu empresa:</label>
+                                            <select th:field="*{empresa}" class="form-control" required>
+                                                <option th:each="empresa : ${listaEmpresa}"
+                                                    th:text="${empresa.razonSocial}" th:value="${empresa.id}"></option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="password" class="form-label">Contraseña:</label>
+                                            <input type="password" id="password" class="form-control"
+                                                th:field="*{password}" required autofocus="autofocus"
+                                                placeholder="Ingrese contraseña">
+                                        </div>
+                                        <div class="col-md-6 col-md-offset-3">
+                                            <button type="submit" class="form-control btn-primary fw-normal"
+                                                name="registro-submit" id="registro-submit">
+                                                <span>Registrar</span>
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

@@ -46,6 +46,20 @@ public class Empresa {
         this.usuarios = usuarios;
     }
 
+    public Empresa(Long id, String rut, String razonSocial, Date fechaIngreso, List<Usuario> usuarios) {
+        this.id = id;
+        this.rut = rut;
+        this.razonSocial = razonSocial;
+        this.fechaIngreso = fechaIngreso;
+        this.usuarios = usuarios;
+    }
+
+    public Empresa(String rut, String razonSocial, Date fechaIngreso) {
+        this.rut = rut;
+        this.razonSocial = razonSocial;
+        this.fechaIngreso = fechaIngreso;
+    }
+
     // Getters and Setters
 
     public Long getId() {

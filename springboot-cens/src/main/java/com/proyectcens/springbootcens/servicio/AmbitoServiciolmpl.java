@@ -3,6 +3,7 @@ package com.proyectcens.springbootcens.servicio;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,8 @@ public class AmbitoServiciolmpl implements AmbitoServicio {
 
     @Autowired
     private AmbitoRepositorio ambitoRepositorio;
+    @Autowired
+    private EntityManager entityManager;
 
     public AmbitoServiciolmpl(AmbitoRepositorio ambitoRepositorio) {
         this.ambitoRepositorio = ambitoRepositorio;
@@ -31,7 +34,7 @@ public class AmbitoServiciolmpl implements AmbitoServicio {
     }
 
     @Override
-    public Optional<Ambito> actualizarAmbito (Long id) {
+    public Optional<Ambito> actualizarAmbito(Long id) {
         return ambitoRepositorio.findById(id);
     }
 
@@ -56,5 +59,9 @@ public class AmbitoServiciolmpl implements AmbitoServicio {
         }
         return res;
     }
-
+@Override
+    public List<Object[]>  promedioPorAmbito(){
+        String sql = "SELECT a.nombre AS category, AVG(n.calificacion) AS value FROM Ambito AS a JOIN SubAmbito AS sa ON a.id = sa.ambito.id JOIN Nota AS n ON sa.id = n.subAmbito.id GROUP BY a.nombre";
+        return entityManager.createQuery(sql).getResultList();
+    }
 }

@@ -21,4 +21,6 @@ public interface AmbitoServicio {
     public void eliminarAmbito(Long id);
 
     public Ambito obtenerAmbitoPorId(Long id);
+
+    List<Object[]>  promedioPorAmbito();
 }

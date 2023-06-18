@@ -7,6 +7,9 @@ import com.proyectcens.springbootcens.modelo.Usuario;
 
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
-	public Usuario findByEmail(String email);
+	
+	public Usuario findByEmail (String email);
+
+	
 
 }

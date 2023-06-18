@@ -11,11 +11,11 @@ public interface EmpresaServicio {
 
     public List<Empresa> obtenerTodosLosEmpresas();
 
-    public Empresa crearEmpresa(Empresa empresa);
-
     public Optional<Empresa> actualizarEmpresa(Long id, Empresa empresa);
 
     public void eliminarEmpresa(Long id);
 
     public Empresa obtenerEmpresaPorRut(String rut);
+
+    
 }

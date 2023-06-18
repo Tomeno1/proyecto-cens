@@ -3,14 +3,15 @@ package com.proyectcens.springbootcens.servicio;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.proyectcens.springbootcens.modelo.Empresa;
 import com.proyectcens.springbootcens.repositorio.EmpresaRepositorio;
 
 @Service
 public class EmpresaServicioImpl implements EmpresaServicio {
 
+    @Autowired
     private EmpresaRepositorio empresaRepositorio;
 
     public EmpresaServicioImpl(EmpresaRepositorio empresaRepositorio) {
@@ -19,10 +20,12 @@ public class EmpresaServicioImpl implements EmpresaServicio {
 
     @Override
     public Empresa guardar(Empresa registroEmpresa) {
-        Empresa empresa = new Empresa(registroEmpresa.getRut(),
-                registroEmpresa.getRazonSocial(), registroEmpresa.getFechaIngreso(), null);
-
-        return empresaRepositorio.save(empresa);
+        Empresa empresa = empresaRepositorio.save(new Empresa(registroEmpresa.getRut(),
+                registroEmpresa.getRazonSocial(), registroEmpresa.getFechaIngreso()));
+        if (empresa.getId() <= 0) {
+            throw new IllegalStateException("El id de la empresa no es valido.");
+        }
+        return empresa;
     }
 
     @Override
@@ -40,12 +43,6 @@ public class EmpresaServicioImpl implements EmpresaServicio {
     public Empresa obtenerEmpresaPorRut(String rut) {
         Optional<Empresa> optionalEmpresa = empresaRepositorio.findByRut(rut);
         return optionalEmpresa.orElse(null);
-    }
-
-    @Override
-    public Empresa crearEmpresa(Empresa empresa) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'crearEmpresa'");
     }
 
     @Override
