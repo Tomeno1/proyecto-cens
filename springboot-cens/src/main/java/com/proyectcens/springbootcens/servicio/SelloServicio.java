@@ -2,14 +2,11 @@ package com.proyectcens.springbootcens.servicio;
 
 import java.util.List;
 import java.util.Optional;
-
-import com.proyectcens.springbootcens.controlador.dto.SelloDTO;
-
 import com.proyectcens.springbootcens.modelo.Sello;
 
 public interface SelloServicio {
 
-    public Sello guardarSelloEmpresa(SelloDTO selloDTO);
+    public int guardar (Sello sello);
 
     public List<Sello> obtenerTodosLosSellos();
 

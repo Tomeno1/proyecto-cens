@@ -2,11 +2,8 @@ package com.proyectcens.springbootcens.servicio;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.proyectcens.springbootcens.controlador.dto.SelloDTO;
 import com.proyectcens.springbootcens.modelo.Sello;
 import com.proyectcens.springbootcens.repositorio.SelloRepositorio;
 
@@ -18,15 +15,6 @@ public class SelloServicioImpl implements SelloServicio {
 
     public SelloServicioImpl(SelloRepositorio selloRepositorio) {
         this.selloRepositorio = selloRepositorio;
-    }
-
-    @Override
-    public Sello guardarSelloEmpresa(SelloDTO selloDTO) {
-        Sello sello = selloRepositorio.save(new Sello(selloDTO.getNombre(), selloDTO.getDescripcion()));
-        if (sello.getId() <= 0) {
-            throw new IllegalStateException("El id del sello no es valido.");
-        }
-        return sello;
     }
 
     @Override
@@ -59,6 +47,16 @@ public class SelloServicioImpl implements SelloServicio {
     public Sello obtenerSelloPorNombre(String nombre) {
         Optional<Sello> optionalSello = selloRepositorio.findByNombre(nombre);
         return optionalSello.orElse(null);
+    }
+
+    @Override
+    public int guardar(Sello sello) {
+        int res = 0;
+        Sello s = selloRepositorio.save(sello);
+        if (!s.equals(null)) {
+            res = 1;
+        }
+        return res;
     }
 
 }

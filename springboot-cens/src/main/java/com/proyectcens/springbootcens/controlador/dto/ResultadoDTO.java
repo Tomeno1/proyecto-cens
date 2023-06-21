@@ -1,30 +1,42 @@
 package com.proyectcens.springbootcens.controlador.dto;
 
 public class ResultadoDTO {
-    private String category;
-    private Double value;
+    private String entidadEvaluadora;
+    private String ambito;
+    private Double promedio;
 
     public ResultadoDTO() {
     }
 
-    public ResultadoDTO(String category, Double value) {
-        this.category = category;
-        this.value = value;
+    public ResultadoDTO(String entidadEvaluadora, String ambito, Double promedio) {
+        this.entidadEvaluadora = entidadEvaluadora;
+        this.ambito = ambito;
+        this.promedio = promedio;
     }
 
-    public String getCategory() {
-        return category;
+    // Getters y setters
+
+    public String getEntidadEvaluadora() {
+        return entidadEvaluadora;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setEntidadEvaluadora(String entidadEvaluadora) {
+        this.entidadEvaluadora = entidadEvaluadora;
     }
 
-    public Double getValue() {
-        return value;
+    public String getAmbito() {
+        return ambito;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setAmbito(String ambito) {
+        this.ambito = ambito;
+    }
+
+    public Double getPromedio() {
+        return promedio;
+    }
+
+    public void setPromedio(Double promedio) {
+        this.promedio = promedio;
     }
 }

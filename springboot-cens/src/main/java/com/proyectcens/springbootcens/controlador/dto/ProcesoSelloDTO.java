@@ -1,74 +1,49 @@
-package com.proyectcens.springbootcens.modelo;
+package com.proyectcens.springbootcens.controlador.dto;
 
-import javax.persistence.*;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "proceso_sello")
-public class ProcesoSello {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+import org.springframework.format.annotation.DateTimeFormat;
 
-    @Column(name = "nombre_etapa")
+import com.proyectcens.springbootcens.modelo.Empresa;
+import com.proyectcens.springbootcens.modelo.Nota;
+import com.proyectcens.springbootcens.modelo.Sello;
+
+public class ProcesoSelloDTO {
+
+    private Long id;
     private String nombreEtapa;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "fecha_nda")
     private Date fechaNda;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "f_acceso_herramienta")
     private Date fechaAccesoHerramienta;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "f_creacion_formulario")
     private Date fechaCreacionFormulario;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "f_envio_formulario")
     private Date fechaEnvioFormulario;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "f_demostracion")
     private Date fechaDemostracion;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "f_entrega_inf_evaluadores")
     private Date fechaEntregaInformeEvaluadores;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "f_entrega_informe")
     private Date fechaEntregaInforme;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "f_entrega_evidencia_final")
     private Date fechaEntregaEvidenciaFinal;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "f_entrega_evidencia_fonasa")
     private Date fechaEntregaEvidenciaFonasa;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "f_integracion_fonasa")
     private Date fechaIntegracionFonasa;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "f_otorgamiento")
     private Date fechaOtorgamiento;
-
-    @ManyToOne
-    @JoinColumn(name = "id_empresa", referencedColumnName = "id")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Empresa empresa;
-
-    @ManyToOne
-    @JoinColumn(name = "id_sello", referencedColumnName = "id")
     private Sello sello;
+    private List<Nota> notas;
 
-    @OneToMany(mappedBy = "procesoSello", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Nota> notas = new ArrayList<>();
-
-    // Construcores
-
-    public ProcesoSello() {
+    public ProcesoSelloDTO() {
     }
 
-    public ProcesoSello(Long id, String nombreEtapa, Date fechaNda, Date fechaAccesoHerramienta,
+    public ProcesoSelloDTO(Long id, String nombreEtapa, Date fechaNda, Date fechaAccesoHerramienta,
             Date fechaCreacionFormulario, Date fechaEnvioFormulario, Date fechaDemostracion,
             Date fechaEntregaInformeEvaluadores, Date fechaEntregaInforme, Date fechaEntregaEvidenciaFinal,
             Date fechaEntregaEvidenciaFonasa, Date fechaIntegracionFonasa, Date fechaOtorgamiento, Empresa empresa,
@@ -91,11 +66,31 @@ public class ProcesoSello {
         this.notas = notas;
     }
 
-    public ProcesoSello(String nombreEtapa, Date fechaNda, Date fechaAccesoHerramienta, Date fechaCreacionFormulario,
+    public ProcesoSelloDTO(String nombreEtapa, Date fechaNda, Date fechaAccesoHerramienta, Date fechaCreacionFormulario,
             Date fechaEnvioFormulario, Date fechaDemostracion, Date fechaEntregaInformeEvaluadores,
             Date fechaEntregaInforme, Date fechaEntregaEvidenciaFinal, Date fechaEntregaEvidenciaFonasa,
-            Date fechaIntegracionFonasa, Date fechaOtorgamiento, Empresa empresa,
-            Sello sello) {
+            Date fechaIntegracionFonasa, Date fechaOtorgamiento, Empresa empresa, Sello sello, List<Nota> notas) {
+        this.nombreEtapa = nombreEtapa;
+        this.fechaNda = fechaNda;
+        this.fechaAccesoHerramienta = fechaAccesoHerramienta;
+        this.fechaCreacionFormulario = fechaCreacionFormulario;
+        this.fechaEnvioFormulario = fechaEnvioFormulario;
+        this.fechaDemostracion = fechaDemostracion;
+        this.fechaEntregaInformeEvaluadores = fechaEntregaInformeEvaluadores;
+        this.fechaEntregaInforme = fechaEntregaInforme;
+        this.fechaEntregaEvidenciaFinal = fechaEntregaEvidenciaFinal;
+        this.fechaEntregaEvidenciaFonasa = fechaEntregaEvidenciaFonasa;
+        this.fechaIntegracionFonasa = fechaIntegracionFonasa;
+        this.fechaOtorgamiento = fechaOtorgamiento;
+        this.empresa = empresa;
+        this.sello = sello;
+        this.notas = notas;
+    }
+
+    public ProcesoSelloDTO(String nombreEtapa, Date fechaNda, Date fechaAccesoHerramienta, Date fechaCreacionFormulario,
+            Date fechaEnvioFormulario, Date fechaDemostracion, Date fechaEntregaInformeEvaluadores,
+            Date fechaEntregaInforme, Date fechaEntregaEvidenciaFinal, Date fechaEntregaEvidenciaFonasa,
+            Date fechaIntegracionFonasa, Date fechaOtorgamiento, Empresa empresa, Sello sello) {
         this.nombreEtapa = nombreEtapa;
         this.fechaNda = fechaNda;
         this.fechaAccesoHerramienta = fechaAccesoHerramienta;
@@ -112,7 +107,10 @@ public class ProcesoSello {
         this.sello = sello;
     }
 
-    // Getters and Setters
+    
+    public ProcesoSelloDTO(Sello sello) {
+        this.sello = sello;
+    }
 
     public Long getId() {
         return id;
@@ -242,13 +240,5 @@ public class ProcesoSello {
         this.notas = notas;
     }
 
-    public void agregarNota(Nota nota) {
-        notas.add(nota);
-        nota.setProcesoSello(this);
-    }
-
-    public void eliminarNota(Nota nota) {
-        notas.remove(nota);
-        nota.setProcesoSello(null);
-    }
+    
 }

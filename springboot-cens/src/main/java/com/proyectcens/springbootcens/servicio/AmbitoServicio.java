@@ -23,4 +23,6 @@ public interface AmbitoServicio {
     public Ambito obtenerAmbitoPorId(Long id);
 
     List<Object[]>  promedioPorAmbito();
+
+    List<Object[]> porcentajeCumplimientoPorAmbito();
 }

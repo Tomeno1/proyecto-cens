@@ -16,9 +16,12 @@
         <div class="row flex-nowrap">
             <div class="sidebar col-auto min-vh-100 d-flex flex-column justify-content-between">
                 <div class="p-2">
-                    <a class="d-flex text-decoration-none mt-1 align-items-center text-white">
-                        <span class="fs-4 d-none d-sm-inline">Menu Lateral</span>
-                    </a>
+                    <hr class="border-top my-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <img th:src="@{/img/logo.png}" class="rounded-circle mx-auto d-block" alt="...">
+                        </div>
+                    </div>
                     <ul class="nav nav-pills flex-column mt-4">
                         <li class="nav-item py-2 py-sm-0">
                             <a th:href="@{/}" href="index.html" class="nav-link text-white"><ion-icon
@@ -35,7 +38,7 @@
                                     name="people"></ion-icon><span class="ms-2 d-none d-sm-inline">Buscar
                                     Empresa</span></a>
                         </li>
-                        <li class="nav-item py-2 py-sm-0">
+                        <li th:if="${#request.isUserInRole('ROLE_ADMIN') or #request.isUserInRole('ROLE_GESTOR')}">
                             <a th:href="@{/crearSello}" href="formRegistroSello.html"
                                 class="nav-link text-white"><ion-icon name="medkit"></ion-icon><span
                                     class="ms-2 d-none d-sm-inline">Sello</span></a>
@@ -45,7 +48,7 @@
                                 class="nav-link text-white"><ion-icon name="person-add"></ion-icon><span
                                     class="ms-2 d-none d-sm-inline">Registrar Usuario CENS</span></a>
                         </li>
-                        <li class="nav-item py-2 py-sm-0"><!-- sec:authorize="isAuthenticated() -->
+                        <li class="nav-item py-2 py-sm-0">
                             <a th:href="@{/login?logout}" href="login.html" class="nav-link text-white"><ion-icon
                                     name="log-out"></ion-icon><span class="ms-2 d-none d-sm-inline">Cerrar
                                     Sesion</span></a>
@@ -101,7 +104,7 @@
                                 <h5 class="card-title">Registro de Sello</h5>
                                 <form method="post" th:action="@{/guardarSello}" th:object="${sello}">
                                     <div class="mb-3 form-group">
-                                        <input type="hidden" id="id" th:field="*{id}" name="id">
+                                        <input type="hidden" th:field="*{id}"/>
                                     </div>
                                     <div class="mb-3">
                                         <label for="nombre" class="form-label">Nombre de Sello:</label>

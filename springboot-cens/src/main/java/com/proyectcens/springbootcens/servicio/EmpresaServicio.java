@@ -17,5 +17,10 @@ public interface EmpresaServicio {
 
     public Empresa obtenerEmpresaPorRut(String rut);
 
+    public Empresa obtenerEmpresaPorId(Long id);
+
+    Empresa ObtenerNombreEmpresa(String nombreEmpresa);
+
+   
     
 }

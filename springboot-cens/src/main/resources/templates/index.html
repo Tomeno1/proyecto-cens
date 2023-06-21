@@ -16,9 +16,12 @@
         <div class="row flex-nowrap">
             <div class="sidebar col-auto min-vh-100 d-flex flex-column justify-content-between">
                 <div class="p-2">
-                    <a class="d-flex text-decoration-none mt-1 align-items-center text-white">
-                        <span class="fs-4 d-none d-sm-inline">Menu Lateral</span>
-                    </a>
+                    <hr class="border-top my-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <img th:src="@{/img/logo.png}" class="rounded-circle mx-auto d-block" alt="...">
+                        </div>
+                    </div>
                     <ul class="nav nav-pills flex-column mt-4">
                         <li class="nav-item py-2 py-sm-0">
                             <a th:href="@{/}" href="index.html" class="nav-link text-white"><ion-icon
@@ -35,7 +38,7 @@
                                     name="people"></ion-icon><span class="ms-2 d-none d-sm-inline">Buscar
                                     Empresa</span></a>
                         </li>
-                        <li class="nav-item py-2 py-sm-0">
+                        <li th:if="${#request.isUserInRole('ROLE_ADMIN') or #request.isUserInRole('ROLE_GESTOR')}">
                             <a th:href="@{/crearSello}" href="formRegistroSello.html"
                                 class="nav-link text-white"><ion-icon name="medkit"></ion-icon><span
                                     class="ms-2 d-none d-sm-inline">Sello</span></a>
@@ -51,7 +54,6 @@
                                     Sesion</span></a>
                         </li>
                     </ul>
-
                 </div>
                 <div class="dropdown open p-3">
                     <button class="btn border-none dropdown-toggle text-white" type="button" id="triggerId"
@@ -74,86 +76,139 @@
                     <div class="col-md-4">
                         <div class="card bg-primary text-white">
                             <div class="card-body">
-                                <h5 class="card-title">Empresa</h5>
-                                <p class="card-text">Nombre de la empresa</p>
+                                <h5 class="card-title">Ultima Empresa Registrada</h5>
+                                <span th:text="${listaEmpresa[0].razonSocial}"></span></h1>
+                                <!-- <p class="card-text">Hospital Regional</p> -->
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card bg-secondary text-white">
                             <div class="card-body">
-                                <h5 class="card-title">Notas Promedio</h5>
-                                <p class="card-text">Promedio de notas</p>
+                                <h5 class="card-title">Porcentaje total de Ambitos</h5>
+                                <p class="card-text" id="promedioPorcentaje"></p>
                             </div>
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    axios.get('/api/porcentaje')
+                                        .then(response => {
+                                            const data = response.data;
+                                            const promedio = data[data.length - 1].promedioTotal;
+
+                                            document.getElementById("promedioPorcentaje").textContent = promedio.toFixed(2) + "%";
+                                        })
+                                        .catch(error => {
+                                            console.error(error);
+                                        });
+                                });
+                            </script>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card bg-success text-white">
                             <div class="card-body">
-                                <h5 class="card-title">Tiempo Promedio de Sellos</h5>
-                                <p class="card-text">Tiempo promedio</p>
+                                <h5 class="card-title">Cantidad de Total de Empresas</h5>
+                                <p class="card-text" th:text="${cantidadEmpresas}"></p>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <hr class="border-top my-4">
                 <div class="row mt-4">
-                    <div class="col-md-4">
-                        <div class="card mt-4">
-                            <div class="card-header">
-                                Ambito Calificaciones
-                            </div>
+                    <div class="col-md-6">
+                        <div class="card ">
                             <div class="card-body">
-                                <canvas id="chartCanvas" style="max-width: 500px; height: auto;"></canvas>
+                                <canvas id="chartCanvas1" style="max-width: auto; height: auto;"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <!-- Otras tarjetas -->
-                    </div>
-                    <div class="col-md-4">
-                        <!-- Otras tarjetas -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <canvas id="chartCanvas2" style="max-width: auto; height: auto;"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- contenido -->
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            var categoria;
-            var valoress;
+            var entidadEvaluadora = "EVAL CENS"; // Reemplaza con el nombre de la entidad que deseas mostrar
+            var datosPorEntidad;
+
             axios.get('/api/promedio')
                 .then(function (response) {
                     var data = response.data; // Aquí obtienes los datos JSON
 
-                    categoria = data.map(function (item) {
-                        return item.category;
+                    datosPorEntidad = {};
+
+                    // Agrupar los datos por entidad evaluadora
+                    data.forEach(function (item) {
+                        var entidad = item.entidadEvaluadora;
+                        if (!datosPorEntidad[entidad]) {
+                            datosPorEntidad[entidad] = [];
+                        }
+                        datosPorEntidad[entidad].push({
+                            ambito: item.ambito,
+                            promedio: item.promedio
+                        });
                     });
 
-                    valoress = data.map(function (item) {
-                        return item.value;
-                    });
-                    var ctx = document.getElementById('chartCanvas').getContext('2d');
+                    var datasets = [];
+
+                    // Crear datasets para la entidad evaluadora seleccionada
+                    if (datosPorEntidad[entidadEvaluadora]) {
+                        var promedios = datosPorEntidad[entidadEvaluadora].map(function (item) {
+                            return item.promedio;
+                        });
+                        datasets.push({
+                            label: "Nota Promedio por Ambito -" + entidadEvaluadora,
+                            data: promedios,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        });
+                    }
+
+                    var ambitos = [];
+
+                    // Obtener los ámbitos correspondientes a la entidad evaluadora seleccionada
+                    if (datosPorEntidad[entidadEvaluadora]) {
+                        ambitos = datosPorEntidad[entidadEvaluadora].map(function (item) {
+                            return item.ambito;
+                        });
+                    }
+
+                    var ctx = document.getElementById('chartCanvas1').getContext('2d');
                     var chart = new Chart(ctx, {
                         type: 'bar',
                         data: {
-                            labels: categoria,
-                            datasets: [{
-                                data: valoress,
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                borderWidth: 1
-                            }]
+                            labels: ambitos,
+                            datasets: datasets
                         },
                         options: {
                             responsive: true,
                             scales: {
                                 y: {
-                                    beginAtZero: true
+                                    beginAtZero: true,
+                                    ticks: {
+                                        font: {
+                                            size: 18 // Tamaño de fuente para el eje y
+                                        }
+                                    }
+                                },
+                                x: {
+                                    ticks: {
+                                        font: {
+                                            size: 14 // Tamaño de fuente para el eje x
+                                        },
+                                    }
                                 }
                             }
                         }
@@ -161,6 +216,89 @@
                 })
                 .catch(function (error) {
                     console.log(error);
+                });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/Chart.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var entidadEvaluadora = "EVAL CENS"; // Reemplaza con el nombre de la entidad que deseas mostrar
+            var datosPorEntidad;
+
+            axios.get('/api/porcentaje')
+                .then(response => {
+                    const data = response.data;
+
+                    datosPorEntidad = {};
+
+                    // Agrupar los datos por entidad evaluadora
+                    data.forEach(function (item) {
+                        var entidad = item.entidadEvaluadora;
+                        if (!datosPorEntidad[entidad]) {
+                            datosPorEntidad[entidad] = [];
+                        }
+                        datosPorEntidad[entidad].push({
+                            ambito: item.ambito,
+                            porcentaje: item.porcentaje
+                        });
+                    });
+
+                    var datasets = [];
+
+                    if (datosPorEntidad[entidadEvaluadora]) {
+                        var porcentajes = datosPorEntidad[entidadEvaluadora].map(function (item) {
+                            return item.porcentaje;
+                        });
+                        datasets.push({
+                            label: "Porcentaje de cumplimiento por ambito " + entidadEvaluadora,
+                            data: porcentajes,
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        });
+                    }
+
+                    var ambitos = [];
+
+                    // Obtener los ámbitos correspondientes a la entidad evaluadora seleccionada
+                    if (datosPorEntidad[entidadEvaluadora]) {
+                        ambitos = datosPorEntidad[entidadEvaluadora].map(function (item) {
+                            return item.ambito;
+                        });
+                    }
+
+                    var ctx = document.getElementById('chartCanvas2').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ambitos,
+                            datasets: datasets
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        font: {
+                                            size: 18 // Tamaño de fuente para el eje y
+                                        }
+                                    }
+                                },
+                                x: {
+                                    ticks: {
+                                        font: {
+                                            size: 14 // Tamaño de fuente para el eje x
+                                        },
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
                 });
         });
     </script>

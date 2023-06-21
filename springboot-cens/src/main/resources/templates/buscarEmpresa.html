@@ -17,9 +17,12 @@
         <div class="row flex-nowrap">
             <div class="sidebar col-auto min-vh-100 d-flex flex-column justify-content-between">
                 <div class="p-2">
-                    <a class="d-flex text-decoration-none mt-1 align-items-center text-white">
-                        <span class="fs-4 d-none d-sm-inline">Menu Lateral</span>
-                    </a>
+                    <hr class="border-top my-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <img th:src="@{/img/logo.png}" class="rounded-circle mx-auto d-block" alt="...">
+                        </div>
+                    </div>
                     <ul class="nav nav-pills flex-column mt-4">
                         <li class="nav-item py-2 py-sm-0">
                             <a th:href="@{/}" href="index.html" class="nav-link text-white"><ion-icon
@@ -36,7 +39,7 @@
                                     name="people"></ion-icon><span class="ms-2 d-none d-sm-inline">Buscar
                                     Empresa</span></a>
                         </li>
-                        <li class="nav-item py-2 py-sm-0">
+                        <li th:if="${#request.isUserInRole('ROLE_ADMIN') or #request.isUserInRole('ROLE_GESTOR')}">
                             <a th:href="@{/crearSello}" href="formRegistroSello.html"
                                 class="nav-link text-white"><ion-icon name="medkit"></ion-icon><span
                                     class="ms-2 d-none d-sm-inline">Sello</span></a>
@@ -46,7 +49,7 @@
                                 class="nav-link text-white"><ion-icon name="person-add"></ion-icon><span
                                     class="ms-2 d-none d-sm-inline">Registrar Usuario CENS</span></a>
                         </li>
-                        <li class="nav-item py-2 py-sm-0"><!-- sec:authorize="isAuthenticated() -->
+                        <li class="nav-item py-2 py-sm-0">
                             <a th:href="@{/login?logout}" href="login.html" class="nav-link text-white"><ion-icon
                                     name="log-out"></ion-icon><span class="ms-2 d-none d-sm-inline">Cerrar
                                     Sesion</span></a>
@@ -67,8 +70,9 @@
             <!--contenido-->
             <div class="col p-3">
                 <div class="col p-3 ">
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                    <form class="d-flex" th:action="@{/buscarEmpresa}" method="GET">
+                        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar"
+                            name="rut">
                         <button class="btn btn-outline-success" type="submit">Buscar</button>
                     </form>
                 </div>
@@ -80,7 +84,6 @@
                                 <div class="card-body">
                                     <div th:if="${param.error}">
                                         <script th:inline="javascript">
-                                            /* Llamar a la función en el evento onload del body */
                                             document.addEventListener("DOMContentLoaded", function () {
                                                 Swal.fire({
                                                     text: 'Lo siento, empresa no Registrada',
@@ -99,7 +102,6 @@
                                         </div>
                                         <button type="submit" class="btn btn-primary">Buscar</button>
                                     </form>
-
                                 </div>
                             </div>
                         </div>
@@ -112,6 +114,7 @@
                                             <tr>
                                                 <th scope="col">RUT</th>
                                                 <th scope="col">Nombre</th>
+                                                <th scope="col"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -119,13 +122,49 @@
                                                 <td th:text="${empresa.rut}"></td>
                                                 <td th:text="${empresa.razonSocial}"></td>
                                                 <td>
-                                                    <a th:href="@{/verEmpresa/}+${empresa.id}"
-                                                        class="btn btn-primary">Ver Empresa</a>
+                                                    <a th:href="@{/crearProcesoSello(empresaId=${empresa.id})}"
+                                                        class="btn btn-primary">Proceso Sello</a>
                                                 </td>
+
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="border-top my-4">
+                    <div class="row">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Etapa en curso</th>
+                                            <th scope="col">Razón Social</th>
+                                            <th scope="col">RUT</th>
+                                            <th scope="col">Nombre Sello</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="procesoSello : ${listaProcesoSello}">
+                                            <td th:text="${procesoSello.nombreEtapa}"></td>
+                                            <td th:text="${procesoSello.empresa.razonSocial}"></td>
+                                            <td th:text="${procesoSello.empresa.rut}"></td>
+                                            <td th:text="${procesoSello.sello.nombre}"></td>
+                                            <td>
+                                                <a th:href="@{/actualizarProcesoSello/{id}(id=${procesoSello.id}, empresaId=${procesoSello.empresa.id})}"
+                                                    class="btn btn-primary">Ver Sello</a>
+                                                <a th:href="@{/eliminarProcesoSello/}+${procesoSello.id}"
+                                                    class="btn btn-success">Calificar Proceso</a>
+                                                <a th:href="@{/eliminarProcesoSello/}+${procesoSello.id}"
+                                                    class="btn btn-danger">Eliminar Proceso Sello</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
                             </div>
                         </div>
                     </div>

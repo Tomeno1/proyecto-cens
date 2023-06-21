@@ -17,4 +17,6 @@ public interface EmpresaRepositorio extends JpaRepository<Empresa, Long> {
 
     Optional<Empresa> findTopByOrderByFechaIngresoDesc();
 
+    Empresa findByRazonSocial(String razonSocial);
 }
+

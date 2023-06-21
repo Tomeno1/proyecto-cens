@@ -15,17 +15,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proyectcens.springbootcens.modelo.Empresa;
+import com.proyectcens.springbootcens.modelo.ProcesoSello;
+import com.proyectcens.springbootcens.repositorio.EmpresaRepositorio;
 import com.proyectcens.springbootcens.servicio.EmpresaServicio;
+import com.proyectcens.springbootcens.servicio.ProcesoSelloServicio;
+import com.proyectcens.springbootcens.servicio.SelloServicio;
 
 @Controller
 @RequestMapping
 public class RegistroEmpresaControlador {
-
-    private final EmpresaServicio empresaServicio;
-
     @Autowired
-    public RegistroEmpresaControlador(EmpresaServicio empresaServicio) {
+    private EmpresaServicio empresaServicio;
+    @Autowired
+    private SelloServicio selloServicio;
+    @Autowired
+    private ProcesoSelloServicio procesoSelloServicio;
+    @Autowired
+    private EmpresaRepositorio empresaRepositorio;
+
+    public RegistroEmpresaControlador(EmpresaServicio empresaServicio, SelloServicio selloServicio,
+            ProcesoSelloServicio procesoSelloServicio) {
         this.empresaServicio = empresaServicio;
+        this.selloServicio = selloServicio;
+        this.procesoSelloServicio = procesoSelloServicio;
     }
 
     @GetMapping("/crearEmpresa")
@@ -65,17 +77,25 @@ public class RegistroEmpresaControlador {
 
     @GetMapping("/buscarEmpresa")
     public String buscarEmpresaPorRut(@RequestParam(value = "rut", required = false) String rut, Model model) {
+        List<ProcesoSello> listaProcesoSello = procesoSelloServicio.obtenerTodosLosProcesoSello();
+        model.addAttribute("listaProcesoSello", listaProcesoSello);
         if (rut != null) {
             Empresa empresa = empresaServicio.obtenerEmpresaPorRut(rut);
             List<Empresa> empresas = new ArrayList<>();
-
             if (empresa != null) {
                 empresas.add(empresa);
+            } else {
+                // La empresa no se encontró, agregar el atributo "error" al modelo
+                model.addAttribute("error", true);
             }
-
             model.addAttribute("empresas", empresas);
         }
-
         return "buscarEmpresa";
     }
+
 }
+
+// List<Empresa> listaEmpresas = empresaServicio.obtenerTodosLosEmpresas();
+// List<Sello> listaSellos = selloServicio.obtenerTodosLosSellos();
+// model.addAttribute("listaEmpresa", listaEmpresas);
+// model.addAttribute("listaSellos", listaSellos);

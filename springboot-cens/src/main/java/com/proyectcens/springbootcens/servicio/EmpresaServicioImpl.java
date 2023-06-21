@@ -30,8 +30,7 @@ public class EmpresaServicioImpl implements EmpresaServicio {
 
     @Override
     public List<Empresa> obtenerTodosLosEmpresas() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerTodosLosEmpresas'");
+        return empresaRepositorio.findAll();
     }
 
     @Override
@@ -49,5 +48,18 @@ public class EmpresaServicioImpl implements EmpresaServicio {
     public Optional<Empresa> actualizarEmpresa(Long id, Empresa empresa) {
         return empresaRepositorio.findById(id);
     }
+
+    @Override
+    public Empresa obtenerEmpresaPorId(Long id) {
+        Optional<Empresa> optionalEmpresa = empresaRepositorio.findById(id);
+        return optionalEmpresa.orElse(null);
+    }
+
+	@Override
+	public Empresa ObtenerNombreEmpresa(String nombreEmpresa) {
+		return empresaRepositorio.findByRazonSocial(nombreEmpresa);
+	}
+
+    
 
 }

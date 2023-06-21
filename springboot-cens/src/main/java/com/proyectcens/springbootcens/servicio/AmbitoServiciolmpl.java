@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,9 +61,29 @@ public class AmbitoServiciolmpl implements AmbitoServicio {
         }
         return res;
     }
-@Override
-    public List<Object[]>  promedioPorAmbito(){
-        String sql = "SELECT a.nombre AS category, AVG(n.calificacion) AS value FROM Ambito AS a JOIN SubAmbito AS sa ON a.id = sa.ambito.id JOIN Nota AS n ON sa.id = n.subAmbito.id GROUP BY a.nombre";
+
+    @Override
+    public List<Object[]> promedioPorAmbito() {
+        String sql = "SELECT e.nombre AS entidadEvaluadora, a.nombre AS ambito, AVG(n.calificacion) AS promedio "
+                + "FROM EntidadEvaluadora e "
+                + "JOIN e.ambitos a "
+                + "JOIN a.subAmbitos sa "
+                + "JOIN sa.notas n "
+                + "GROUP BY e.nombre, a.nombre";
         return entityManager.createQuery(sql).getResultList();
     }
+
+    @Override
+    public List<Object[]> porcentajeCumplimientoPorAmbito() {
+        String sql = "SELECT e.nombre AS entidadEvaluadora, a.nombre AS ambito, " +
+                "COUNT(CASE WHEN n.calificacion >= 2 THEN 1 END) * 100 / COUNT(*) AS porcentajeCumplimiento " +
+                "FROM EntidadEvaluadora e " +
+                "JOIN e.ambitos a " +
+                "JOIN a.subAmbitos sa " +
+                "JOIN sa.notas n " +
+                "GROUP BY e.nombre, a.nombre";
+
+        return entityManager.createQuery(sql).getResultList();
+    }
+
 }

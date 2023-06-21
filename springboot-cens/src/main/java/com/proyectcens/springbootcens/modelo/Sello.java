@@ -51,6 +51,9 @@ public class Sello {
     }
     // Getters and Setters
 
+    public Sello(Sello sello) {
+    }
+
     public Long getId() {
         return id;
     }
